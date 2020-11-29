@@ -1,0 +1,71 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "TM4C123x" --package "64 Pin QFP|16x16" --part "TM4C123GH6PM"
+ * @versions {"data":"2020052512","timestamp":"2020052512","tool":"1.5.0+1397","templates":"2020052512"}
+ */
+
+/**
+ * These are the peripherals and settings in this configuration
+ */
+const iCAN1         = scripting.addPeripheral("CAN");
+iCAN1.$name         = "MyCAN1";
+iCAN1.RX.$assign    = "PB4";
+const iGPIO1        = scripting.addPeripheral("GPIO");
+iGPIO1.$numPins     = 4;
+iGPIO1["0"].pu_pd   = "pu";
+iGPIO1["0"].io      = "outputOpenDrain";
+iGPIO1["0"].$assign = "PF4";
+iGPIO1["1"].pu_pd   = "pu";
+iGPIO1["1"].io      = "outputOpenDrain";
+iGPIO1["1"].$assign = "PA2";
+iGPIO1["2"].pu_pd   = "pu";
+iGPIO1["2"].io      = "outputOpenDrain";
+iGPIO1["2"].$assign = "PA3";
+iGPIO1["3"].pu_pd   = "pu";
+iGPIO1["3"].io      = "outputOpenDrain";
+iGPIO1["3"].$assign = "PA4";
+iGPIO1.$name        = "TurnSignals";
+const iGPIO2        = scripting.addPeripheral("GPIO");
+iGPIO2.$numPins     = 2;
+iGPIO2["0"].$assign = "PB6";
+iGPIO2["1"].$assign = "PB7";
+iGPIO2.$name        = "TurnStalk";
+const iGPIO3        = scripting.addPeripheral("GPIO");
+iGPIO3.$numPins     = 4;
+iGPIO3["0"].pu_pd   = "pu";
+iGPIO3["0"].io      = "outputOpenDrain";
+iGPIO3["0"].$assign = "PA6";
+iGPIO3["1"].pu_pd   = "pu";
+iGPIO3["1"].io      = "outputOpenDrain";
+iGPIO3["1"].$assign = "PA7";
+iGPIO3["2"].pu_pd   = "pu";
+iGPIO3["2"].io      = "outputOpenDrain";
+iGPIO3["2"].$assign = "PE1";
+iGPIO3["3"].pu_pd   = "pu";
+iGPIO3["3"].io      = "outputOpenDrain";
+iGPIO3["3"].$assign = "PE2";
+iGPIO3.$name        = "Headlights";
+const iGPIO4        = scripting.addPeripheral("GPIO");
+iGPIO4.$numPins     = 2;
+iGPIO4["0"].$assign = "PB2";
+iGPIO4["1"].$assign = "PB3";
+iGPIO4.$name        = "HeadlightCtl";
+const iTimer1       = scripting.addPeripheral("Timer");
+iTimer1.$name       = "TurnSignalTimer";
+iTimer1.CCP0.$used  = false;
+iTimer1.CCP1.$used  = false;
+const iTimer2       = scripting.addPeripheral("Timer");
+iTimer2.$name       = "IsoTPTimers";
+iTimer2.$assign     = "Timer5";
+iTimer2.CCP0.$used  = false;
+iTimer2.CCP1.$used  = false;
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+iCAN1.$suggestSolution    = "CAN0";
+iCAN1.TX.$suggestSolution = "PB5";
+iTimer1.$suggestSolution  = "Timer0";
