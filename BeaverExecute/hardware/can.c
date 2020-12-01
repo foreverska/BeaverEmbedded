@@ -11,10 +11,12 @@
 
 #include "comms/isotp.h"
 
-#define CAN0RXID    0x7E2
-#define CAN0TXID    0x7EA
+#define CAN0RXID    0x7E3
+#define CAN0TXID    0x7EB
 #define RXOBJECT    1
 #define TXOBJECT    2
+
+#define BITRATE     500000
 
 uint32_t rxMsgCount = 0;
 bool rxReady = false;
@@ -51,7 +53,7 @@ void InitCan(void)
 
     SysCtlPeripheralEnable(SYSCTL_PERIPH_CAN0);
     CANInit(CAN0_BASE);
-    CANBitRateSet(CAN0_BASE, SysCtlClockGet(), 1000000);
+    CANBitRateSet(CAN0_BASE, SysCtlClockGet(), BITRATE);
     CANIntEnable(CAN0_BASE, CAN_INT_MASTER | CAN_INT_STATUS | CAN_INT_ERROR);
     IntEnable(INT_CAN0);
 

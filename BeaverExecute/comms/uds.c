@@ -156,28 +156,26 @@ void WriteById(uint8_t *pData, uint16_t size)
     uint32_t val;
     int retval;
 
-    if (size == WRITEID_SZ)
+    if (size != WRITEID_SZ)
     {
         SendNrc(pData[0], NRC_ILF);
     }
 
-    id = pOutData->curData[1] << 8 | pOutData->curData[2];
-    val = pOutData->curData[3] << 24 | pOutData->curData[4] << 16 |
-          pOutData->curData[5] << 8 | pOutData->curData[6];
+    id = pData[1] << 8 | pData[2];
+    val = pData[3] << 24 | pData[4] << 16 | pData[5] << 8 | pData[6];
 
     retval = WriteId(id, val, false);
-    if (retval == DATASTORE_OK)
-    {
-        pOutData->curData[0] = WRITE_BY_ID + RESP_OFFSET;
-        pOutData->curData[1] = pOutData->curData[1];
-        pOutData->curData[2] = pOutData->curData[2];
-        pOutData->targetLength = 3;
-        StartIsoTpOut();
-    }
-    else
+    if (retval != DATASTORE_OK)
     {
         SendRwIdNrc(WRITE_BY_ID, retval);
+        return;
     }
+
+    pOutData->curData[0] = WRITE_BY_ID + RESP_OFFSET;
+    pOutData->curData[1] = pData[1];
+    pOutData->curData[2] = pData[2];
+    pOutData->targetLength = 3;
+    StartIsoTpOut();
 }
 
 void ProcessUDSData(uint8_t *pData, uint16_t size)

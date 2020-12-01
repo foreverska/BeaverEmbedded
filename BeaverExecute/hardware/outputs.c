@@ -107,7 +107,7 @@ void ProcessOutputs()
         return;
     }
 
-    outputs = (internal & ~holds) | holdvals;
+    outputs = (internal & ~holds) | (holdvals & holds);
 
     ProcessPortA(outputs);
     ProcessPortE(outputs);

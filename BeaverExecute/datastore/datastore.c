@@ -36,7 +36,7 @@ int32_t ReadId(uint16_t id, uint32_t *pValue, bool internal)
         return DATASTORE_NOPERM;
     }
 
-    if ((internal == false) && (GetSecurityLevel() >= dataStore[id].minsec))
+    if ((internal == false) && (GetSecurityLevel() < dataStore[id].minsec))
     {
         return DATASTORE_NOSEC;
     }
@@ -69,7 +69,7 @@ int32_t WriteId(uint16_t id, uint32_t value, bool internal)
         return DATASTORE_NOPERM;
     }
 
-    if ((internal == false) && (GetSecurityLevel() >= dataStore[id].minsec))
+    if ((internal == false) && (GetSecurityLevel() < dataStore[id].minsec))
     {
         return DATASTORE_NOSEC;
     }
