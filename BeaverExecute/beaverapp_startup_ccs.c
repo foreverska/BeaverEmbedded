@@ -60,6 +60,8 @@ extern uint32_t __STACK_TOP;
 //
 //*****************************************************************************
 
+extern void SystickISR();
+
 //*****************************************************************************
 //
 // The vector table.  Note that the proper constructs must be placed on this to
@@ -86,7 +88,7 @@ void (* const g_pfnVectors[])(void) =
     &IntDefaultHandler,                      // Debug monitor handler
     0,                                      // Reserved
     &IntDefaultHandler,                      // The PendSV handler
-    &IntDefaultHandler,                      // The SysTick handler
+    &SystickISR,                             // The SysTick handler
     &IntDefaultHandler,                      // GPIO Port A
     &PortBInputISR,                          // GPIO Port B
     &IntDefaultHandler,                      // GPIO Port C

@@ -5,6 +5,7 @@
 #include "driverlib/pin_map.h"
 #include "driverlib/sysctl.h"
 #include "driverlib/can.h"
+#include "driverlib/systick.h"
 #include "inc/hw_memmap.h"
 
 #ifdef DEBUG
@@ -19,8 +20,27 @@
 #include "logic/headlights.h"
 #include "hardware/inputs.h"
 #include "hardware/outputs.h"
+#include "hardware/resetdog.h"
+#include "hardware/swrng.h"
+#include "comms/uds.h"
 
 #define TOGGLE_TIME 1000000
+
+static bool systickInt;
+
+void SystickISR()
+{
+    systickInt = true;
+}
+
+void InitSystick()
+{
+    systickInt = false;
+
+    SysTickPeriodSet(SysCtlClockGet()/100);
+    SysTickIntEnable();
+    SysTickEnable();
+}
 
 int main(void)
 {
@@ -39,12 +59,23 @@ int main(void)
     InitHeadlights();
     InitInputs();
     InitOutputs();
+    InitResetWatchdog();
+    InitSystick();
+
+    InitSwRNG();
 
     while(1)
     {
-        ProcessCan();
-        ProcessHeadlights();
-        ProcessOutputs();
+        if (systickInt == true)
+        {
+            systickInt = false;
+
+            ProcessCan();
+            ProcessHeadlights();
+            ProcessOutputs();
+            FeedWatchdog();
+            TickUDSTimer();
+        }
 
         SysCtlSleep();
     }

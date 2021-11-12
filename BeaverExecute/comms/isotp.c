@@ -299,6 +299,7 @@ void StartIsoTpOut()
         memcpy(&outFrame[2], outData.curData, DATA_IN_FF);
         SendCanFrame(outFrame, FRAME_SIZE);
         outData.curLength += DATA_IN_FF;
+        outData.curIndex = 1;
         flowFrameRecv = false;
         StartOutFrameTimer(MAX_FLOW_WAIT);
     }

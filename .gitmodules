@@ -1,0 +1,3 @@
+[submodule "BeaverExecute/portable8439"]
+	path = BeaverExecute/portable8439
+	url = https://github.com/DavyLandman/portable8439.git

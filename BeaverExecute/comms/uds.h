@@ -7,6 +7,7 @@
 
 void InitUDS(void);
 void ProcessUDSData(uint8_t *pData, uint16_t size);
+void TickUDSTimer();
 
 uint8_t GetSecurityLevel(void);
 
